@@ -1,6 +1,6 @@
 /**
-*	@author Hallvard Jore christensen
-* @date 13. March 2018
+* @author Hallvard Jore Christensen
+* @date 13th March 2018
 **/
 public class Logger {
 
@@ -25,7 +25,7 @@ public class Logger {
     public AppLogBuilder debug(String message, sObject obj) 	{ return logMessage(message, Severity.DEBUG, obj); }
     public AppLogBuilder info(String message,  sObject obj) 	{ return logMessage(message, Severity.INFO, obj); }
     public AppLogBuilder warning(String message,  sObject obj) 	{ return logMessage(message, Severity.WARNING, obj); }
-		public AppLogBuilder error(String message,  sObject obj) 	{ return logMessage(message, Severity.ERROR, obj); }
+	public AppLogBuilder error(String message,  sObject obj) 	{ return logMessage(message, Severity.ERROR, obj); }
     public AppLogBuilder critical(String message,  sObject obj)	{ return logMessage(message, Severity.CRITICAL, obj); }
     public AppLogBuilder exception(Exception e) {
         return logMessage(e.getTypeName()+': \r\n'+e.getMessage(), null, null,
@@ -44,7 +44,7 @@ public class Logger {
 
         //Backup value
         if(severity == null) severity = DEFAULT_SEVERITY;
-				//Create log message
+		//Create log message
         App_Log__c log = new App_Log__c(
        		Message__c = message,
             Source__c = source,
@@ -57,14 +57,14 @@ public class Logger {
             Delta_Time__c = deltaTime
         );
 
-				//Fill in missing context information and add to list
+		//Fill in missing context information and add to list
         trackAppLog(log);
-				logs.add(log);
+		logs.add(log);
         return new AppLogBuilder(log);
     }
 
     public class AppLogBuilder {
-        public final App_Log__c log;
+        public App_Log__c log {get;set;}
         public AppLogBuilder(App_Log__c log) { this.log = log; }
         public AppLogBuilder source(String sourceClass) 			{ log.Source__c = sourceClass; return this; }
         public AppLogBuilder message(String message) 				{ log.Message__c = message; return this; }
@@ -93,7 +93,7 @@ public class Logger {
     private static String getStackTrace() {
         String stackTrace = '';
         try { update new Account(); }
-				catch(Exception e) {
+		catch(Exception e) {
             stackTrace = e.getStackTraceString()
                 .substringAfterLast('Class.Logger')
                 .substringAfter('column 1');

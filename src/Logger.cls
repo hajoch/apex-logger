@@ -40,8 +40,9 @@ public class Logger {
         String objId = (obj == null ? null : obj.Id);
         return logMessage(message, null, null, severity, objId, objectName, null, JSON.serializePretty(obj), null);
     }
-    public AppLogBuilder logMessage(String message, String source, String sourceFunction, Severity severity, String referenceId, String referenceType, String stackTrace, String payload, Integer deltaTime) {
 
+	public AppLogBuilder logMessage(String message, String source, String sourceFunction, Severity severity, String referenceId, 
+									String referenceType, String stackTrace, String payload, Integer deltaTime) {
         //Backup value
         if(severity == null) severity = DEFAULT_SEVERITY;
 		//Create log message
@@ -64,7 +65,7 @@ public class Logger {
     }
 
     public class AppLogBuilder {
-        public App_Log__c log {get;set;}
+        public final App_Log__c log;
         public AppLogBuilder(App_Log__c log) { this.log = log; }
         public AppLogBuilder source(String sourceClass) 			{ log.Source__c = sourceClass; return this; }
         public AppLogBuilder message(String message) 				{ log.Message__c = message; return this; }
